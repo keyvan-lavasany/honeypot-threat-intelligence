@@ -1,0 +1,30 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://your_loki_server:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: cowrie-docker
+
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+
+    relabel_configs:
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/sensor-cowrie-1'
+        action: keep
+
+      - target_label: job
+        replacement: cowrie
+
+      - target_label: dc
+        replacement: dc1
+
+      - source_labels: ['__meta_docker_container_name']
+        target_label: container

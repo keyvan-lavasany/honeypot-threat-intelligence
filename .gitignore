@@ -1,0 +1,21 @@
+# Documentation files
+*.docx
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# Runtime data
+loki-data/
+grafana-data/
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Temporary files
+*.tmp
+*.bak
